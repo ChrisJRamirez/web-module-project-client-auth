@@ -1,24 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+
+import PrivateRoute from "./components/PrivateRoute"
+import Login from './components/Login';
+import FriendsList from './components/FriendsList';
+import Logout from './components/Logout';
+
 function App() {
+
+  const logout = (props) => {
+    localStorage.removeItem("token");
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <ul>
+            <li>
+              <Link to="/login"> Login </Link>
+            </li>
+
+            <li>
+              <Link to="/logout" onClick={logout}> Logout </Link>
+            </li>
+
+            <li>
+              <Link to="/protected">Protected Page</Link>
+            </li>
+          </ul>
+
+          <Switch>
+            <PrivateRoute exact path="/protected" component={FriendsList}> </PrivateRoute>
+            
+            <PrivateRoute path="/logout" component={Logout}></PrivateRoute>
+
+            <Route path="/login" component={Login} />
+            <Route path="/" component={Login} />
+
+          </Switch>
+          
+        </header>
+      </div>
+    </Router>
   );
 }
 
