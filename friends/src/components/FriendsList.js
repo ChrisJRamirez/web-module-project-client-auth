@@ -9,9 +9,11 @@ class FriendsList extends React.Component {
 
   componentDidMount() {
       this.getFriends();
+      console.log("hello")
   }
 
   getFriends = () => {
+    console.log("hello")
     axiosWithAuth()
     .get("/friends")
     .then(res => {
@@ -34,7 +36,7 @@ class FriendsList extends React.Component {
           <h1>Friends List</h1>
         </div>
 
-        {this.friendsList.map((friend) => (
+        {this.state.friendsList.map((friend) => (
           <div key={friend.id} className="friend-id">
           
             <div>
