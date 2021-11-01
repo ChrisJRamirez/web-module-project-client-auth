@@ -9,30 +9,30 @@ import Logout from './components/Logout';
 
 function App() {
 
-  const logout = (props) => {
+  const logout = () => {
     localStorage.removeItem("token");
   }
 
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <ul>
-            <li>
-              <Link to="/login"> Login </Link>
-            </li>
-
-            <li>
-              <Link to="/logout" onClick={logout}> Logout </Link>
-            </li>
-
-            <li>
-              <Link to="/protected">Protected Page</Link>
-            </li>
-          </ul>
-
+        <div>
+          {localStorage.getItem("token") ?
+          <div>
+            <ul>
+              <li>
+                <Link to="/logout" onClick={logout}> Logout </Link>
+              </li>
+              <li>
+                <Link to="/protected">Protected Page</Link>
+              </li>
+            </ul>
+          </div> : <Link to="/login">Login</Link>
+          }
+          </div>
+          
           <Switch>
-            <PrivateRoute exact path="/protected" component={FriendsList}> </PrivateRoute>
+            <PrivateRoute exact path="/friendsList" component={FriendsList}> </PrivateRoute>
             
             <PrivateRoute path="/logout" component={Logout}></PrivateRoute>
 
@@ -41,7 +41,7 @@ function App() {
 
           </Switch>
           
-        </header>
+          
       </div>
     </Router>
   );
